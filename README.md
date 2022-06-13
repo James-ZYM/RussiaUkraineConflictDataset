@@ -1,6 +1,8 @@
 # RussiaUkraineConflict_Dataset
 A Reddit Dataset for the Russo-Ukrainian Conflict in 2022
 
+Paper link: https://arxiv.org/abs/2206.05107
+
 ## Cite Info
 ~~~
 @misc{https://doi.org/10.48550/arxiv.2206.05107,
