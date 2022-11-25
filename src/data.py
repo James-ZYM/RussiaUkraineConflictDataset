@@ -18,7 +18,7 @@ def get_files():
                 file_list.append(file_path)
     return file_list
 
-def text_to_df(file_list):
+def file_to_df(file_list):
     list = []
     for file in file_list:
         with open(file, 'r') as f:
