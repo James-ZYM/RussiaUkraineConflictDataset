@@ -3,10 +3,13 @@ import pandas as pd
 import csv
 import re
 
-def get_files():
+
+def get_files(current_path):
+    os.chdir(current_path)
     data_dirs = [os.path.join(".." , "Comments"), os.path.join(".." ,"Submissions")]
     file_list = []
     for dir in data_dirs:
+
         date_dirs = os.listdir(dir)
         
         for subdir in date_dirs:
