@@ -4,7 +4,8 @@ import csv
 import re
 from langdetect import detect
 
-def get_files():
+def get_files(current_path):
+    os.chdir(current_path)
     data_dirs = [os.path.join(".." , "Comments"), os.path.join(".." ,"Submissions")]
     file_list = []
     for dir in data_dirs:
