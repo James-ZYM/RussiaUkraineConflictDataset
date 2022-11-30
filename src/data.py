@@ -23,29 +23,29 @@ def get_files(current_path):
 def file_to_df(file_list):
     list = []
     for file in file_list_sub:
-    with open(file, 'r') as f:
-        split_file_name = file.split("/")
-        r = split_file_name[3].split(".")
-        reader = csv.reader(f)
-        for row in reader:
-            rowID = row
-            text1 = row[14] # body
-            text2 = row[15] # body_sha_1
-            subreddit = r[0]
-            post_type = split_file_name[1]
-            date = split_file_name[2]
-            if row == 0:
-                pass
-            elif text1 == False:
-                pass
-            else:
-                try:
-                    language = detect(text1)
-                except:
-                    lang='no'                                                  
-                    language = "none"
-            data_list = [text1, text2, subreddit, post_type, date, language]
-            list.append(data_list)
+        with open(file, 'r') as f:
+            split_file_name = file.split("/")
+            r = split_file_name[3].split(".")
+            reader = csv.reader(f)
+            for row in reader:
+                rowID = row
+                text1 = row[14] # body
+                text2 = row[15] # body_sha_1
+                subreddit = r[0]
+                post_type = split_file_name[1]
+                date = split_file_name[2]
+                if row == 0:
+                    pass
+                elif text1 == False:
+                    pass
+                else:
+                    try:
+                        language = detect(text1)
+                    except:
+                        lang='no'                                                  
+                        language = "none"
+                data_list = [text1, text2, subreddit, post_type, date, language]
+                list.append(data_list)
 
     data = pd.DataFrame(list)
     data.columns = ["body", "body_sha1", "subreddit", "post_type", "date", "language"]
