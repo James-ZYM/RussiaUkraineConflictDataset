@@ -5,8 +5,6 @@ import re
 from data import *
 import os
 cwd = os.path.dirname(os.path.abspath(__file__))
-#cwd = os.getcwd()
-#print(cwd)
 
 file_list = get_files(cwd)
 
