@@ -9,7 +9,7 @@ def get_files(current_path: str, data_dirs: list) -> list:
     """This functions takes the current path and the data directories and returns a list of all filenames.
 
     Args:
-        current_path (str): _description_
+        current_path (str): path of current file location (main)
         data_dirs (list): a list of directories in which to find files (here either Comments, Submissions, or both)
 
     Returns:
@@ -70,7 +70,7 @@ def file_to_df(file_list: list) -> pd.DataFrame and list:
     
     # record start time
     start = time.time()
-    print("Almost finished. I just need to detect the languages in your dataset. This should take a good while, so this is a good time to get up and stretch your legs.", "\n", "For reference, this process took ~2 minutes running 10 files on 8 CPUs.")
+    print("Almost finished. I just need to detect the languages in your dataset. This should take a good while, so this is a good time to get up and stretch your legs.", "\n", "For reference, this process took ~3 minutes running 10 files on 8 CPUs.")
     final_data['language'] = pd.Series(dtype='str')
     for row in range(len(final_data)):
         try:
@@ -83,9 +83,9 @@ def file_to_df(file_list: list) -> pd.DataFrame and list:
     # print the difference between start and end time in milli. secs
     print(f"The time of execution of the language detection was : {end-start} s")
     
-    # drop rows where comment has been removed
+    # drop rows where comment has been removed and NAs
     final_data = final_data.drop(final_data[final_data.body == "[removed]"].index)
-    print(exceptions)
- 
+    final_data = final_data.drop(final_data[final_data.body == "author_premium"].index)
+    final_data.dropna()
 
     return final_data, exceptions
