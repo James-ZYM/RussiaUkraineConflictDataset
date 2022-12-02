@@ -21,6 +21,7 @@ def get_files(current_path, data_dirs: list):
 
 def file_to_df(file_list):
     list = []
+    i = 0
     exceptions = []
     for file in file_list:
         try:
@@ -37,12 +38,10 @@ def file_to_df(file_list):
                         subreddit = r[0]
                         post_type = split_file_name[1]
                         date = split_file_name[2]
-                        try:
-                            language = detect(text1)
-                        except:                                              
-                            language = "none"
-                    data_list = [text1, text2, subreddit, post_type, date, language]
+                    data_list = [text1, text2, subreddit, post_type, date]
                     list.append(data_list)
+                if subreddit == "war":
+                    print(f'Finished processing file number {i} of {len(file_list)}!')
         except Exception as e: exceptions.append((file, str(e)))
     data = pd.DataFrame(list)
     data.columns = ["body", "body_sha1", "subreddit", "post_type", "date", "language"]
@@ -53,6 +52,15 @@ def file_to_df(file_list):
     final_data = pd.concat([temp_data, data])
     final_data['index1'] = final_data.index
     final_data = final_data.drop_duplicates(subset='index1')
+    # detect language of comment
+    final_data['language'] = pd.Series(dtype='str')
+    for row in range(len(final_data)):
+        try:
+            final_data.iloc[row, 5] = detect(final_data.iloc[row, 0])
+        except: 
+            final_data.iloc[row, 5] = "none"
+    # drop rows where comment has been removed
+    final_data = final_data.drop(final_data[final_data.body == "[removed]"].index)
  
 
     return final_data, exceptions
