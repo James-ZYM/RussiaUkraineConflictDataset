@@ -41,7 +41,7 @@ def file_to_df(file_list: list) -> pd.DataFrame and list:
         list: list of lists with filenames of the files that did not read into the pd.DataFrame and the corresponding error.
     """
 
-    list = []
+    list_file = []
     i = 0
     exceptions = []
     for file in file_list:
@@ -49,7 +49,8 @@ def file_to_df(file_list: list) -> pd.DataFrame and list:
         try:
             # open file and append a list of two text columns, the subreddit column, the post type and the date to list
             with open(file, 'r') as f:
-                split_file_name = file.split("/")
+                split_file_name = os.path.normpath(file)
+                split_file_name.split(os.sep)
                 r = split_file_name[3].split(".")
                 reader = csv.reader(f)
                 for row in reader:
@@ -62,7 +63,7 @@ def file_to_df(file_list: list) -> pd.DataFrame and list:
                         post_type = split_file_name[1]
                         date = split_file_name[2]
                     data_list = [text1, text2, subreddit, post_type, date]
-                    list.append(data_list)
+                    list_file.append(data_list)
                 # some print to see progress
                 if subreddit == "war":
                     print(f'Finished processing file number {i} of {len(file_list)}!')
@@ -71,7 +72,7 @@ def file_to_df(file_list: list) -> pd.DataFrame and list:
         except Exception as e: exceptions.append([file, str(e)])
     
     # create pd.DataFrame
-    data = pd.DataFrame(list)
+    data = pd.DataFrame(list_file)
         # rename columns
     data.columns = ["body", "body_sha1", "subreddit", "post_type", "date"]
         # temp data to be able to merge the two text columns
