@@ -1,5 +1,0 @@
-['../Comments/2022-02-24/RussiaUkraineWar2022.csv', 'list index out of range']
-['../Comments/2022-03-15/CredibleDefense.csv', 'line contains NUL']
-['../Comments/2022-03-13/CredibleDefense.csv', 'line contains NUL']
-['../Comments/2022-06-06/UkraineWarReports.csv', 'list index out of range']
-['../Comments/2022-03-25/CredibleDefense.csv', 'line contains NUL']

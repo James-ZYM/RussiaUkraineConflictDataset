@@ -18,17 +18,89 @@ def get_files(current_path: str, data_dirs: list) -> list:
     """
     os.chdir(current_path)
     file_list = []
-    for dir in data_dirs:
-        date_dirs = os.listdir(dir)
-        
-        for subdir in date_dirs:
-            path = os.path.join(dir, subdir)
-            files = os.listdir(path)
-            
-            for file in files:
-                file_path = os.path.join(path, file)
-                file_list.append(file_path)
+    for folder in data_dirs:
+        folder_dirs = os.listdir(folder)
+        for dir in folder_dirs:
+            path1 = os.path.join(folder, dir)
+            date_dirs = os.listdir(path1)
+            for subdir in date_dirs:
+                path = os.path.join(path1, subdir)
+                files = os.listdir(path)        
+                for file in files:
+                    file_path = os.path.join(path, file)
+                    file_list.append(file_path)
     return file_list
+
+def make_df(file_list: list, save: int = 0) -> pd.DataFrame and list:
+    exceptions = []
+    dfs = []
+
+    for file in file_list:
+        print(file)
+        try:
+            split_file_name = os.path.normpath(file)
+            split_file_name = split_file_name.split(os.sep)
+            df_init = pd.read_csv(file)
+
+            if split_file_name[2] == 'Comments':
+                df_dict = creating_series(split_file_name[2], split_file_name, df_init)
+
+            elif split_file_name[2] == 'Submissions':
+                df_dict = creating_series(split_file_name[2], split_file_name, df_init)
+
+            dfs.append(pd.DataFrame(df_dict))
+            
+        except pd.errors.EmptyDataError:
+            exceptions.append(file)
+            pass
+    
+    final_df = pd.concat(dfs)
+    
+    if save: 
+        outfile_csv = os.path.join("..", "data", "preprocessed_data.csv")
+        outfile_pickle = os.path.join("..", "data", "preprocessed_data.pkl")
+        final_df.to_csv(outfile_csv) 
+        final_df.to_pickle(outfile_pickle)
+
+        outfile_txt = os.path.join("..", "data", "exception_files.txt")
+        with open(outfile_txt, "w") as f:
+            for path in exceptions:
+                # write each item on a new line
+                f.write("%s\n" % path)
+
+    return final_df, exceptions
+
+def creating_series(document_type: str, split_name: list, df_init: pd.DataFrame):
+
+    if document_type == 'Submissions':
+        type_string = 'submission'
+        doc_col = 'title'
+
+    elif document_type == 'Comments':
+        type_string = 'comment'
+        doc_col = 'body'
+
+    documents = df_init[doc_col].rename(type_string)
+    doc_type =  pd.Series([type_string] * len(documents))
+    sub_reddit = pd.Series([split_name[4].split('.')[0]] * len(documents), name = 'sub_reddit') # change index
+    date = pd.Series([split_name[3].split('.')[0]] * len(documents), name = 'date') # change index
+    language = detect_language(documents)
+    df_dict = {'document':documents, 'sub_reddit': sub_reddit, 'date': date, 'type' : doc_type, 'language': language}
+    print('loaded file')
+
+    return df_dict
+
+
+def detect_language(documents: pd.Series):
+    language = []
+    for doc in documents:
+        try:
+            language.append(detect(doc))
+        except:
+            language.append("none")
+
+    language = pd.Series(language, name = 'language')
+    return language
 
 def file_to_df(file_list: list) -> pd.DataFrame and list:
 
