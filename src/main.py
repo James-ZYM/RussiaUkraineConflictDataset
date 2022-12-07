@@ -15,7 +15,7 @@ data, exception_files = file_to_df(file_list_sub)
 
 os.makedirs('../data', exist_ok=True) 
 data.to_csv('../data/formatted_data.csv') 
-exception_files.to_csv('../data/exception_files.csv')
+#exception_files.to_csv('../data/exception_files.csv')
 
 
 outfile = os.path.join("..", "data", "exception_files.txt")

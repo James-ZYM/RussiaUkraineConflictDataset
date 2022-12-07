@@ -41,11 +41,11 @@ def file_to_df(file_list):
                             language = detect(text1)
                         except:                                              
                             language = "none"
-                    data_list = [text1, text2, subreddit, post_type, date, language]
+                    data_list = [text1, text2, subreddit, post_type, date]
                     list.append(data_list)
         except Exception as e: exceptions.append((file, str(e)))
     data = pd.DataFrame(list)
-    data.columns = ["body", "body_sha1", "subreddit", "post_type", "date", "language"]
+    data.columns = ["body", "body_sha1", "subreddit", "post_type", "date"]
     temp_data = data.loc[(data['body'] == "True") | (data['body'] == "False")]
     temp_data = temp_data.drop(columns = "body")
     temp_data = temp_data.rename(columns = {'body_sha1':'body'})
