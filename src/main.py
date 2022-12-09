@@ -8,7 +8,7 @@ import pickle
 
 def main():
     cwd = os.path.dirname(os.path.abspath(__file__))
-    
+
     dirs = [os.path.join(".." , "Comments")]
     file_list = get_files(current_path = cwd, data_dirs = dirs)
 
