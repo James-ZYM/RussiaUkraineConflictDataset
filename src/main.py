@@ -2,24 +2,21 @@ import os
 import pandas as pd
 import csv
 from data import *
+import pickle
 
+# running this script took 7.65 hrs on all comments (9225973 rows) on 64 CPUs
 
-cwd = os.path.dirname(os.path.abspath(__file__))
+def main():
 
-dirs = [os.path.join(".." , "Comments")]
-file_list = get_files(current_path = cwd, data_dirs = dirs)
+    cwd = os.path.dirname(os.path.abspath(__file__))
 
-file_list_sub = file_list[:10]
+    dirs = [os.path.join(".." , "raw")]
+    file_list = get_files(current_path = cwd, data_dirs = dirs)
 
-data, exception_files = file_to_df(file_list_sub)
+    #file_list = file_list[:50] + file_list[1320:1370]
+    #file_list = file_list[1320:1322]
 
-os.makedirs('../data', exist_ok=True) 
-data.to_csv('../data/formatted_data.csv') 
-exception_files.to_csv('../data/exception_files.csv')
+    make_df(file_list, save = 1)
 
-
-outfile = os.path.join("..", "data", "exception_files.txt")
-with open(outfile, "w") as f:
-    for item in exception_files:
-        # write each item on a new line
-        f.write("%s\n" % item)
+if __name__ == "__main__":
+    main()
