@@ -1,5 +1,56 @@
-['../Comments/2022-02-24/RussiaUkraineWar2022.csv', 'list index out of range']
-['../Comments/2022-03-15/CredibleDefense.csv', 'line contains NUL']
-['../Comments/2022-03-13/CredibleDefense.csv', 'line contains NUL']
-['../Comments/2022-06-06/UkraineWarReports.csv', 'list index out of range']
-['../Comments/2022-03-25/CredibleDefense.csv', 'line contains NUL']
+../raw/Submissions/2022-05-06/UkraineWarReports.csv
+../raw/Submissions/2022-06-12/UkraineWarReports.csv
+../raw/Submissions/2022-05-21/UkraineWarReports.csv
+../raw/Submissions/2022-05-07/UkraineWarReports.csv
+../raw/Submissions/2022-04-24/UkraineWarReports.csv
+../raw/Submissions/2022-04-25/UkraineWarReports.csv
+../raw/Submissions/2022-05-27/UkraineWarReports.csv
+../raw/Submissions/2022-05-09/UkraineWarReports.csv
+../raw/Submissions/2022-05-16/UkraineWarReports.csv
+../raw/Submissions/2022-05-24/UkraineWarReports.csv
+../raw/Submissions/2022-04-30/UkraineWarReports.csv
+../raw/Submissions/2022-05-14/UkraineWarReports.csv
+../raw/Submissions/2022-05-05/UkraineWarReports.csv
+../raw/Submissions/2022-06-10/UkraineWarReports.csv
+../raw/Submissions/2022-05-15/UkraineWarReports.csv
+../raw/Submissions/2022-04-28/UkraineWarReports.csv
+../raw/Submissions/2022-05-17/UkraineWarReports.csv
+../raw/Submissions/2022-06-06/UkraineWarReports.csv
+../raw/Submissions/2022-06-09/UkraineWarReports.csv
+../raw/Submissions/2022-06-11/UkraineWarReports.csv
+../raw/Submissions/2022-05-04/UkraineWarReports.csv
+../raw/Submissions/2022-06-08/UkraineWarReports.csv
+../raw/Submissions/2022-05-11/UkraineWarReports.csv
+../raw/Submissions/2022-06-05/UkraineWarReports.csv
+../raw/Submissions/2022-04-29/UkraineWarReports.csv
+../raw/Submissions/2022-05-02/UkraineWarReports.csv
+../raw/Submissions/2022-06-04/UkraineWarReports.csv
+../raw/Submissions/2022-04-26/UkraineWarReports.csv
+../raw/Submissions/2022-05-31/UkraineWarReports.csv
+../raw/Submissions/2022-05-28/UkraineWarReports.csv
+../raw/Submissions/2022-05-30/UkraineWarReports.csv
+../raw/Submissions/2022-06-01/UkraineWarReports.csv
+../raw/Submissions/2022-05-22/UkraineWarReports.csv
+../raw/Submissions/2022-05-29/UkraineWarReports.csv
+../raw/Submissions/2022-05-23/UkraineWarReports.csv
+../raw/Submissions/2022-06-07/UkraineWarReports.csv
+../raw/Submissions/2022-05-13/UkraineWarReports.csv
+../raw/Submissions/2022-04-27/UkraineWarReports.csv
+../raw/Submissions/2022-04-21/UkraineWarReports.csv
+../raw/Submissions/2022-06-02/UkraineWarReports.csv
+../raw/Submissions/2022-05-10/UkraineWarReports.csv
+../raw/Submissions/2022-05-26/UkraineWarReports.csv
+../raw/Submissions/2022-05-20/UkraineWarReports.csv
+../raw/Submissions/2022-05-12/UkraineWarReports.csv
+../raw/Submissions/2022-05-08/UkraineWarReports.csv
+../raw/Submissions/2022-05-01/UkraineWarReports.csv
+../raw/Submissions/2022-04-22/UkraineWarReports.csv
+../raw/Submissions/2022-05-25/UkraineWarReports.csv
+../raw/Submissions/2022-05-18/UkraineWarReports.csv
+../raw/Submissions/2022-04-23/UkraineWarReports.csv
+../raw/Submissions/2022-05-19/UkraineWarReports.csv
+../raw/Submissions/2022-06-13/UkraineWarReports.csv
+../raw/Submissions/2022-06-03/UkraineWarReports.csv
+../raw/Submissions/2022-05-03/UkraineWarReports.csv
+../raw/Comments/2022-02-24/RussiaUkraineWar2022.csv
+../raw/Comments/2022-06-06/UkraineWarReports.csv
