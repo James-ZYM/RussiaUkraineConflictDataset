@@ -22,7 +22,7 @@ sudo apt-get install python3.9-dev -y
 pip install --upgrade pip
 pip install bertopic
 # install packages
-pip install langdetect
+pip install fasttext-wheel
 
 # done
 echo -e "[${GREEN}INFO:${NC}] Everything installed!"
