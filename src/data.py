@@ -2,8 +2,9 @@ import os
 import pandas as pd
 import csv
 import re
-from langdetect import detect
+import fasttext
 import time
+
 
 def get_files(current_path: str, data_dirs: list) -> list:
     """This functions takes the current path and the data directories and returns a list of all filenames.
@@ -31,7 +32,8 @@ def get_files(current_path: str, data_dirs: list) -> list:
                     file_list.append(file_path)
     return file_list
 
-def make_df(file_list: list, save: int = 0) -> pd.DataFrame and list:
+
+def make_df(file_list: list, save, ft_model) -> pd.DataFrame and list:
 
     start = time.time()
     
@@ -46,10 +48,10 @@ def make_df(file_list: list, save: int = 0) -> pd.DataFrame and list:
             df_init = pd.read_csv(file)
 
             if split_file_name[2] == 'Comments':
-                df_dict = creating_series(split_file_name[2], split_file_name, df_init)
+                df_dict = creating_series(split_file_name[2], split_file_name, df_init, ft_model)
 
             elif split_file_name[2] == 'Submissions':
-                df_dict = creating_series(split_file_name[2], split_file_name, df_init)
+                df_dict = creating_series(split_file_name[2], split_file_name, df_init, ft_model)
 
             dfs.append(pd.DataFrame(df_dict))
             
@@ -67,12 +69,12 @@ def make_df(file_list: list, save: int = 0) -> pd.DataFrame and list:
     final_df.dropna(inplace=True)
     
     if save: 
-        outfile_csv = os.path.join("..", "data", "preprocessed_data_bigger_faster.csv")
-        outfile_pickle = os.path.join("..", "data", "preprocessed_data_bigger_faster.pkl")
+        outfile_csv = os.path.join("..", "data", "test_df.csv")
+        outfile_pickle = os.path.join("..", "data", "test_df.pkl")
         final_df.to_csv(outfile_csv) 
         final_df.to_pickle(outfile_pickle)
 
-        outfile_txt = os.path.join("..", "data", "exception_files_bigger_faster.txt")
+        outfile_txt = os.path.join("..", "data", "exception_files_test_df.txt")
         with open(outfile_txt, "w") as f:
             for path in exceptions:
                 # write each item on a new line
@@ -81,9 +83,9 @@ def make_df(file_list: list, save: int = 0) -> pd.DataFrame and list:
     end = time.time()
     print(f"Data preprocessing took: {(end-start)/60} mins")
 
-    return 
+    return final_df
 
-def creating_series(document_type: str, split_name: list, df_init: pd.DataFrame):
+def creating_series(document_type: str, split_name: list, df_init: pd.DataFrame, ft_model):
 
     if document_type == 'Submissions':
         type_string = 'submission'
@@ -97,22 +99,35 @@ def creating_series(document_type: str, split_name: list, df_init: pd.DataFrame)
     doc_type =  pd.Series([type_string] * len(documents))
     sub_reddit = pd.Series([split_name[4].split('.')[0]] * len(documents), name = 'sub_reddit') # change index
     date = pd.Series([split_name[3].split('.')[0]] * len(documents), name = 'date') # change index
-    language = detect_language(documents)
-    df_dict = {'document':documents, 'sub_reddit': sub_reddit, 'date': date, 'type' : doc_type, 'language': language}
+    language, confidence = detect_language(documents, ft_model)
+    df_dict = {'document':documents, 'sub_reddit': sub_reddit, 'date': date, 'type' : doc_type, 'language': language, 'confidence': confidence}
     
     return df_dict
 
-
-def detect_language(documents: pd.Series):
-    language = []
+def detect_language(documents: pd.Series, ft_model):
+    ft_language = []
+    confidence = []
     for doc in documents:
         try:
-            language.append(detect(doc))
+            doc = re.sub(r'\n', ' ', doc)
         except:
-            language.append("none")
+            pass
+        try:
+            predictions = ft_model.predict(doc)
+            lang = re.sub(r'__label__', '', predictions[0][0])
+            conf = predictions[1][0]
+        except:
+            lang = "none"
+            #conf = Nan
 
-    language = pd.Series(language, name = 'language')
-    return language
+        ft_language.append(lang)
+        confidence.append(conf)
+        
+    ft_language = pd.Series(ft_language, name = 'ft_language')
+    confidence = pd.Series(confidence, name = 'confidence')
+    
+    return ft_language, confidence    
+
 
 def file_to_df(file_list: list) -> pd.DataFrame and list:
 
