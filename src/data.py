@@ -31,7 +31,8 @@ def get_files(current_path: str, data_dirs: list) -> list:
                     file_list.append(file_path)
     return file_list
 
-def make_df(file_list: list, save: int = 0, ft_model: fasttext.model) -> pd.DataFrame and list:
+
+def make_df(file_list: list, save, ft_model) -> pd.DataFrame and list:
 
     start = time.time()
     
@@ -67,12 +68,12 @@ def make_df(file_list: list, save: int = 0, ft_model: fasttext.model) -> pd.Data
     final_df.dropna(inplace=True)
     
     if save: 
-        outfile_csv = os.path.join("..", "data", "preprocessed_data_bigger_faster.csv")
-        outfile_pickle = os.path.join("..", "data", "preprocessed_data_bigger_faster.pkl")
+        outfile_csv = os.path.join("..", "data", "test_df.csv")
+        outfile_pickle = os.path.join("..", "data", "test_df.pkl")
         final_df.to_csv(outfile_csv) 
         final_df.to_pickle(outfile_pickle)
 
-        outfile_txt = os.path.join("..", "data", "exception_files_bigger_faster.txt")
+        outfile_txt = os.path.join("..", "data", "exception_files_test_df.txt")
         with open(outfile_txt, "w") as f:
             for path in exceptions:
                 # write each item on a new line
@@ -81,9 +82,9 @@ def make_df(file_list: list, save: int = 0, ft_model: fasttext.model) -> pd.Data
     end = time.time()
     print(f"Data preprocessing took: {(end-start)/60} mins")
 
-    return 
+    return final_df
 
-def creating_series(document_type: str, split_name: list, df_init: pd.DataFrame, ft_model: fasttext.model):
+def creating_series(document_type: str, split_name: list, df_init: pd.DataFrame, ft_model):
 
     if document_type == 'Submissions':
         type_string = 'submission'
@@ -102,7 +103,7 @@ def creating_series(document_type: str, split_name: list, df_init: pd.DataFrame,
     
     return df_dict
 
-def detect_language(documents: pd.Series, ft_model: fasttext.model):
+def detect_language(documents: pd.Series, ft_model):
     ft_language = []
     confidence = []
     for doc in documents:
@@ -111,12 +112,12 @@ def detect_language(documents: pd.Series, ft_model: fasttext.model):
         except:
             pass
         try:
-            predictions = ft_model.predict(doc, k=1)
+            predictions = ft_model.predict(doc)
             lang = re.sub(r'__label__', '', predictions[0][0])
             conf = predictions[1][0]
         except:
             lang = "none"
-            conf = Nan
+            #conf = Nan
 
         ft_language.append(lang)
         confidence.append(conf)
@@ -125,6 +126,7 @@ def detect_language(documents: pd.Series, ft_model: fasttext.model):
     confidence = pd.Series(confidence, name = 'confidence')
     
     return ft_language, confidence    
+
 
 def file_to_df(file_list: list) -> pd.DataFrame and list:
 
