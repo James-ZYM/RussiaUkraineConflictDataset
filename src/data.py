@@ -5,6 +5,7 @@ import re
 import fasttext
 import time
 
+
 def get_files(current_path: str, data_dirs: list) -> list:
     """This functions takes the current path and the data directories and returns a list of all filenames.
 
